@@ -1,143 +1,83 @@
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 import { StatusBar } from "expo-status-bar";
-import { Formik } from "formik";
 import React from "react";
-import {
-  Alert, SafeAreaView, Text,
-  TouchableOpacity, View
-} from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import FormField from "./components/register-form/FormField";
-import { styles } from "./components/register-form/styles";
-import { validationSchemaByYup } from "./components/register-form/validation";
+import { Text } from "react-native";
+import { Image, View } from "react-native";
+import moveTabIcon from "./assets/pokedex/move-active.png";
+import pokemonTabIcon from "./assets/pokedex/pokemon-active.png";
+import MoveDetail from "./components/pokedex/screens/MoveDetail";
+import MoveList from "./components/pokedex/screens/MoveList";
+// import PokemonDetail from "./components/pokedex/screens/PokemonDetail";
+// import PokemonList from "./components/pokedex/screens/PokemonList";
 
-export default function RegisterForm() {
-  function onSubmitHandler(values) {
-    // https://reactnative.dev/docs/alert
-    Alert.alert(
-      "Register Successfully!",
-      "Form data: " + JSON.stringify(values)
+// https://reactnavigation.org/docs/stack-navigator/
+const PokemonStack = createStackNavigator();
+const MoveStack = createStackNavigator();
+const stackScreenOptions = {
+  headerShown: false,
+  gestureEnabled: true,
+};
+
+function PokemonStackScreen() {
+  return (
+    <Text>PokemonStackScreen</Text>
+    // <PokemonStack.Navigator screenOptions={stackScreenOptions}>
+    //   <PokemonStack.Screen name="PokemonList" component={PokemonList} />
+    //   <PokemonStack.Screen name="PokemonDetail" component={PokemonDetail} />
+    // </PokemonStack.Navigator>
+  );
+}
+
+function MoveStackScreen() {
+  return (
+    <MoveStack.Navigator screenOptions={stackScreenOptions}>
+      <MoveStack.Screen name="MoveList" component={MoveList} />
+      <MoveStack.Screen name="MoveDetail" component={MoveDetail} />
+    </MoveStack.Navigator>
+  );
+}
+
+// https://reactnavigation.org/docs/bottom-tab-navigator/
+const Tab = createBottomTabNavigator();
+const ActiveColor = "#000000";
+const InActiveColor = "#00000077";
+const tabScreenOptions = ({ route }) => ({
+  tabBarIcon: ({ color, size }) => {
+    return (
+      <View style={{ alignItems: "center" }}>
+        <Image
+          source={route.name === "Pokemons" ? pokemonTabIcon : moveTabIcon}
+          style={{
+            opacity: color == ActiveColor ? 1 : 0.5,
+            width: size,
+            height: size,
+          }}
+        />
+      </View>
     );
-  }
+  },
+});
+const tabBarOptions = {
+  activeTintColor: ActiveColor,
+  inactiveTintColor: InActiveColor,
+};
 
-  function isFormValid(isValid, touched) {
-    return isValid && Object.keys(touched).length !== 0;
-  }
-
+export default function Pokedex() {
   return (
     <>
-      <SafeAreaView style={styles.topSafeArea} />
-
       <StatusBar style="light" />
 
-      <SafeAreaView style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.headerText}>Register</Text>
-        </View>
-
-        {/* https://github.com/APSL/react-native-keyboard-aware-scroll-view */}
-        <KeyboardAwareScrollView
-          style={styles.content}
-          showsVerticalScrollIndicator={false}
-          keyboardShouldPersistTaps="handled"
-          extraScrollHeight={150}
+      <NavigationContainer>
+        <Tab.Navigator
+          screenOptions={tabScreenOptions}
+          tabBarOptions={tabBarOptions}
         >
-          {/* https://formik.org/docs/guides/react-native */}
-          <Formik
-            // cai nay thay cho state neu KO dung "Formik" 
-            initialValues={{
-              formikFirstName: "",
-              formikLastName: "",
-              formikEmail: "",
-              formikPassword: "",
-              formikConfirmPassword: "",
-            }}
-            onSubmit={onSubmitHandler}
-            validationSchema={validationSchemaByYup}
-          >
-            {({
-              handleChange,
-              handleBlur,
-              handleSubmit,
-              values,
-              errors,
-              touched,
-              isValid,
-            }) => (
-              <>
-                <FormField
-                  ffField="formikFirstName"
-                  ffLabel="First Name"
-                  ffAutoCapitalize="words"
-                  ffValues={values}
-                  ffTouched={touched}
-                  ffErrors={errors}
-                  ffOnHandleChange={handleChange}
-                  ffOnHandleBlur={handleBlur}
-                />
-
-                <FormField
-                  ffField="formikLastName"
-                  ffLabel="Last Name"
-                  ffAutoCapitalize="words"
-                  ffValues={values}
-                  ffTouched={touched}
-                  ffErrors={errors}
-                  ffOnHandleChange={handleChange}
-                  ffOnHandleBlur={handleBlur}
-                />
-
-                <FormField
-                  ffField="formikEmail"
-                  ffLabel="Email Address"
-                  ffValues={values}
-                  ffTouched={touched}
-                  ffErrors={errors}
-                  ffOnHandleChange={handleChange}
-                  ffOnHandleBlur={handleBlur}
-                />
-
-                <FormField
-                  ffField="formikPassword"
-                  ffLabel="Password"
-                  secureTextEntry={true}
-                  ffValues={values}
-                  ffTouched={touched}
-                  ffErrors={errors}
-                  ffOnHandleChange={handleChange}
-                  ffOnHandleBlur={handleBlur}
-                />
-
-                <FormField
-                  ffField="formikConfirmPassword"
-                  ffLabel="Confirm Password"
-                  secureTextEntry={true}
-                  ffValues={values}
-                  ffTouched={touched}
-                  ffErrors={errors}
-                  ffOnHandleChange={handleChange}
-                  ffOnHandleBlur={handleBlur}
-                />
-
-                <TouchableOpacity
-                  disabled={!isFormValid(isValid, touched)}
-                  onPress={handleSubmit}
-                >
-                  <View
-                    style={[
-                      styles.button,
-                      {
-                        opacity: isFormValid(isValid, touched) ? 1 : 0.5,
-                      },
-                    ]}
-                  >
-                    <Text style={styles.buttonText}>SUBMIT</Text>
-                  </View>
-                </TouchableOpacity>
-              </>
-            )}
-          </Formik>
-        </KeyboardAwareScrollView>
-      </SafeAreaView>
+          <Tab.Screen name="Pokemons" component={PokemonStackScreen} />
+          <Tab.Screen name="Moves" component={MoveStackScreen} />
+        </Tab.Navigator>
+      </NavigationContainer>
     </>
   );
 }

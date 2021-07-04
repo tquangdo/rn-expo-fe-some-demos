@@ -14,5 +14,5 @@ export const validationSchemaByYup = Yup.object().shape({
         .min(6, "Password must have at least 6 characters"),
     formikConfirmPassword: Yup.string()
         .required("Please confirm password")
-        .oneOf([Yup.ref("password")], "Password & Confirm Password does not match"),
+        .oneOf([Yup.ref("formikPassword")], "Password & Confirm Password does not match"),
 });
