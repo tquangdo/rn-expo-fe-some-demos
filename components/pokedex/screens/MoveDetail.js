@@ -10,7 +10,9 @@ export default function MoveDetail({ navigation, route }) {
 
     return (
         <View style={styles.container}>
-            <MainHeader navigation={navigation} />
+            <MainHeader
+                title="MoveDetail (DoTQ)"
+                navigation={navigation} />
 
             <ScrollView style={{ flex: 1 }}>
                 <View style={styles.content}>

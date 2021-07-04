@@ -3,14 +3,13 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { Text } from "react-native";
 import { Image, View } from "react-native";
 import moveTabIcon from "./assets/pokedex/move-active.png";
 import pokemonTabIcon from "./assets/pokedex/pokemon-active.png";
 import MoveDetail from "./components/pokedex/screens/MoveDetail";
 import MoveList from "./components/pokedex/screens/MoveList";
-// import PokemonDetail from "./components/pokedex/screens/PokemonDetail";
-// import PokemonList from "./components/pokedex/screens/PokemonList";
+import PokemonDetail from "./components/pokedex/screens/PokemonDetail";
+import PokemonList from "./components/pokedex/screens/PokemonList";
 
 // https://reactnavigation.org/docs/stack-navigator/
 const PokemonStack = createStackNavigator();
@@ -22,11 +21,10 @@ const stackScreenOptions = {
 
 function PokemonStackScreen() {
   return (
-    <Text>PokemonStackScreen</Text>
-    // <PokemonStack.Navigator screenOptions={stackScreenOptions}>
-    //   <PokemonStack.Screen name="PokemonList" component={PokemonList} />
-    //   <PokemonStack.Screen name="PokemonDetail" component={PokemonDetail} />
-    // </PokemonStack.Navigator>
+    <PokemonStack.Navigator screenOptions={stackScreenOptions}>
+      <PokemonStack.Screen name="PokemonList" component={PokemonList} />
+      <PokemonStack.Screen name="PokemonDetail" component={PokemonDetail} />
+    </PokemonStack.Navigator>
   );
 }
 

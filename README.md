@@ -9,4 +9,3 @@
 scan bar code on `expo go` appstore
 ************************
 ![demo](screenshots/demo.gif)
-![demo](screenshots/demo.mp4)
