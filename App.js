@@ -1,81 +1,126 @@
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import { StatusBar } from "expo-status-bar";
-import React from "react";
-import { Image, View } from "react-native";
-import moveTabIcon from "./assets/pokedex/move-active.png";
-import pokemonTabIcon from "./assets/pokedex/pokemon-active.png";
-import MoveDetail from "./components/pokedex/screens/MoveDetail";
-import MoveList from "./components/pokedex/screens/MoveList";
-import PokemonDetail from "./components/pokedex/screens/PokemonDetail";
-import PokemonList from "./components/pokedex/screens/PokemonList";
+import React, { useState, useRef } from "react";
+import { StyleSheet, SafeAreaView, Text, View, Animated } from "react-native";
+import Constants from "expo-constants";
+import DisplayResult from "./components/rock-paper-scissors/DisplayResult";
+import Actions from "./components/rock-paper-scissors/Actions";
+import { DRAW, LOSE, WIN } from "./components/rock-paper-scissors/constants";
 
-// https://reactnavigation.org/docs/stack-navigator/
-const PokemonStack = createStackNavigator();
-const MoveStack = createStackNavigator();
-const stackScreenOptions = {
-  headerShown: false,
-  gestureEnabled: true,
-};
+export default function RockPaperScissors() {
+  const [staUserChoice, setStaUserChoice] = useState(0);
+  const [staComputerChoice, setStaComputerChoice] = useState(0);
+  const [staResult, setStaResult] = useState("");
+  const [staCanPlay, setStaCanPlay] = useState(true);
 
-function PokemonStackScreen() {
+  // https://reactjs.org/docs/hooks-reference.html#useref
+  const fadeAnimation = useRef(new Animated.Value(1)).current;
+
+  function onPlay(arg_choice) {
+    // 1 = rock, 2 = paper, 3 = scissors
+    const randomComputerChoice = Math.floor(Math.random() * 3) + 1;
+    let resultString = "";
+
+    if (arg_choice === 1) {
+      resultString = randomComputerChoice === 3 ? WIN : LOSE;
+    } else if (arg_choice === 2) {
+      resultString = randomComputerChoice === 1 ? WIN : LOSE;
+    } else {
+      resultString = randomComputerChoice === 2 ? WIN : LOSE;
+    }
+
+    if (arg_choice === randomComputerChoice) {
+      resultString = DRAW;
+    }
+
+    setStaUserChoice(arg_choice);
+    setStaComputerChoice(randomComputerChoice);
+
+    // Wait animation hide old result
+    setTimeout(() => {
+      setStaResult(resultString);
+    }, 300);
+
+    // Animation hide old result and show new result
+    // https://reactnative.dev/docs/animations
+    Animated.sequence([
+      Animated.timing(fadeAnimation, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: true,
+      }),
+      Animated.timing(fadeAnimation, {
+        toValue: 1,
+        duration: 300,
+        useNativeDriver: true,
+      }),
+    ]).start();
+
+    // Disable action when animation running
+    setStaCanPlay(false);
+    setTimeout(() => {
+      setStaCanPlay(true);
+    }, 500);
+  }
+
   return (
-    <PokemonStack.Navigator screenOptions={stackScreenOptions}>
-      <PokemonStack.Screen name="PokemonList" component={PokemonList} />
-      <PokemonStack.Screen name="PokemonDetail" component={PokemonDetail} />
-    </PokemonStack.Navigator>
-  );
-}
+    <SafeAreaView style={styles.container}>
+      <View style={styles.content}>
+        <View style={{ alignItems: "center" }}>
+          <Text>Chơi oẳn tù xì (DoTQ)</Text>
+        </View>
+        <View style={styles.result}>
+          <Animated.Text
+            style={[styles.resultText, { opacity: fadeAnimation }]}
+          >
+            {staResult}
+          </Animated.Text>
+        </View>
 
-function MoveStackScreen() {
-  return (
-    <MoveStack.Navigator screenOptions={stackScreenOptions}>
-      <MoveStack.Screen name="MoveList" component={MoveList} />
-      <MoveStack.Screen name="MoveDetail" component={MoveDetail} />
-    </MoveStack.Navigator>
-  );
-}
-
-// https://reactnavigation.org/docs/bottom-tab-navigator/
-const Tab = createBottomTabNavigator();
-const ActiveColor = "#000000";
-const InActiveColor = "#00000077";
-const tabScreenOptions = ({ route }) => ({
-  tabBarIcon: ({ color, size }) => {
-    return (
-      <View style={{ alignItems: "center" }}>
-        <Image
-          source={route.name === "Pokemons" ? pokemonTabIcon : moveTabIcon}
-          style={{
-            opacity: color == ActiveColor ? 1 : 0.5,
-            width: size,
-            height: size,
-          }}
-        />
+        <View style={styles.screen}>
+          {!staResult ? (
+            <Text style={styles.readyText}>Let's Play!</Text>
+          ) : (
+            // hien trai la "You", phai la "Computer"
+            <DisplayResult
+              props_userChoice={staUserChoice}
+              props_computerChoice={staComputerChoice}
+            />
+          )}
+        </View>
+        {/* trong luc dang choi oan tu xi thi KO duoc click nua!!! */}
+        <Actions props_play={onPlay} props_canPlay={staCanPlay} />
       </View>
-    );
-  },
-});
-const tabBarOptions = {
-  activeTintColor: ActiveColor,
-  inactiveTintColor: InActiveColor,
-};
-
-export default function Pokedex() {
-  return (
-    <>
-      <StatusBar style="light" />
-
-      <NavigationContainer>
-        <Tab.Navigator
-          screenOptions={tabScreenOptions}
-          tabBarOptions={tabBarOptions}
-        >
-          <Tab.Screen name="Pokemons" component={PokemonStackScreen} />
-          <Tab.Screen name="Moves" component={MoveStackScreen} />
-        </Tab.Navigator>
-      </NavigationContainer>
-    </>
+    </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: Constants.statusBarHeight,
+  },
+  content: {
+    flex: 1,
+    padding: 15,
+  },
+  result: {
+    height: 100,
+    justifyContent: "flex-end",
+    alignItems: "center",
+  },
+  resultText: {
+    fontSize: 48,
+    fontWeight: "bold",
+  },
+  screen: {
+    flex: 1,
+    flexDirection: "row",
+  },
+  readyText: {
+    marginTop: -48,
+    alignSelf: "center",
+    textAlign: "center",
+    width: "100%",
+    fontSize: 48,
+    fontWeight: "bold",
+  },
+})
