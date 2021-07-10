@@ -12,7 +12,7 @@ export default function MomoLogin() {
   return (
     <SafeAreaView style={styles.styContainer}>
       {/* Hien keyboard (khi go password) se KO che chu dang hien tren form
-      nhung voi TH form qua dai thi phai dung "react-native-keyboard-aware-scroll-view"
+      nhung voi TH form qua dai thi phai dung "react-native-keyboard-aware-scroll-view" (RegisterForm.js)
       -> khi dung thi KO can 2 cai nay luon: "KeyboardAvoidingView" & "Keyboard.dismiss" */}
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
