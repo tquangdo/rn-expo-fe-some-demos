@@ -16,6 +16,8 @@ export default function FacebookLogin() {
             style={[styles.input, styles.inputUsername]}
             placeholder="Số điện thoại hoặc email"
             placeholderTextColor="#cdcdcf"
+            // returnKeyType='google'
+            autoFocus={true}
           />
 
           <TextInput
