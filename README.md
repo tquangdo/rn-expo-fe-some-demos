@@ -25,3 +25,11 @@ Learn how to use: **Animations**, **React Hook useRef**
 Learn how to use: **React Native Elements**, **React Navigation**, **React Native Progress**, **React Hook useEffect with Cleanup**
 ************************
 ![demo](screenshots/demo.gif)
+### 8/ flatlist
+CRUID REST API: "be/Server.js"
+```js
+const MOCKAPI_URI = 'https://5edc676811cb1d001665ce13.mockapi.io/dotq/list_all_foods';
+```
+************************
+![api1](screenshots/api1.jpeg)
+![api2](screenshots/api2.jpeg)
