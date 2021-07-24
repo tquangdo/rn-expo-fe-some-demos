@@ -29,6 +29,7 @@ export default function MomoLogin() {
 
             <View style={styles.styForm}>
               {/* https://docs.expo.io/guides/icons */}
+              {/* https://fontawesome.com/icons */}
               <FontAwesome5 name="lock" style={styles.iconLock} />
 
               {/* https://reactnative.dev/docs/textinput */}
