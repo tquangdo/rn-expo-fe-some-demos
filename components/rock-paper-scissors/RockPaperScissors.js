@@ -12,7 +12,7 @@ export default function RockPaperScissors() {
   const [staCanPlay, setStaCanPlay] = useState(true);
 
   // https://reactjs.org/docs/hooks-reference.html#useref
-  const fadeAnimation = useRef(new Animated.Value(1)).current;
+  const fadeAnimation = useRef(new Animated.Value(1)).current; // Initial value for opacity: 1
 
   function onPlay(arg_choice) {
     // 1 = rock, 2 = paper, 3 = scissors
