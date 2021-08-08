@@ -13,7 +13,7 @@ const fbaseConfig = {
 fbase.initializeApp(fbaseConfig)
 const doc_fstore = fbase.firestore().collection("Stuff")
 
-export default function App() {
+export default function FilestoreDemo() {
   const [staStuffTasks, setStaStuffTasks] = React.useState([])
   const [staNewTask, setStaNewTask] = React.useState('')
   React.useEffect(() => {
