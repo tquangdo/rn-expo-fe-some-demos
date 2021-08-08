@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     height: null,
     aspectRatio: 750 / 460, // Image ratio
   },
-  // "HOAC" nam duoi cung screen KO phu thuoc size smartphone
+  // "HOAC"("Số điện thoại hoặc email") nam duoi cung screen KO phu thuoc size smartphone
   container: {
     flex: 1,
     justifyContent: "space-between",

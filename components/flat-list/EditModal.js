@@ -100,7 +100,7 @@ export default class EditModal extends Component {
                         updateAFood(staId, put_params).then(res => {
                             if (res) {
                                 staFlItems._onRefreshFlatListItem({
-                                    id: staId, //phai co dong nay vi App.js>_onRefreshFlatListItem(arg){this.setState({ staItems: arg })}
+                                    id: staId, //phai co dong nay vi BasicFlatList.js>_onRefreshFlatListItem(arg){this.setState({ staItems: arg })}
                                     name: staFoodName,
                                     foodDescription: staFoodDescription,
                                 })

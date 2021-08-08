@@ -27,6 +27,7 @@ class CompFlatListItem extends Component {
       right: [
         {
           onPress: () => {
+            // EditModal.js > onShowEditModal = (arg_editing_food, arg_fl_items) => {...}
             props_parentFlatList.refEditModal.current.onShowEditModal(selectedItem, this);
           },
           text: 'Edit', type: 'primary'
