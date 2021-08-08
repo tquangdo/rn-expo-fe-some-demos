@@ -102,16 +102,18 @@ export default class FBaseDemo extends React.Component {
         type,
         token,
       } = await Facebook.logInWithReadPermissionsAsync({
-        permissions: ['public_profile'],
+        permissions: ['public_profile', 'email'],
       });
       if (type === 'success') {
         const credential = fbase.auth.FacebookAuthProvider.credential(token)
         // https://github.com/expo/expo/issues/8226#issuecomment-627391143
         // "message": "(#100) The App_id in the input_token did not match the Viewing App"
         // => just ERR with Expo + FBase + Fbook
-        fbase.auth().signInWithCredential(credential).catch((err) => {
-          alert(err.toString())
-        })
+        fbase.auth().signInWithCredential(credential)
+          .then((arg_fb_user) => { console.log('FB user: ', JSON.stringify(arg_fb_user)) })
+          .catch((err) => {
+            alert(err.toString())
+          })
       } else {
         // type === 'cancel'
         Alert.alert('You cancelled login FB!');
