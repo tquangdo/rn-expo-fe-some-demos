@@ -27,6 +27,8 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "description": "this is demo for ReactNative, just in FE, NOT BE!",
+    "githubUrl": "https://github.com/tquangdo/rn-fe-some-demos.git"
   }
 }
