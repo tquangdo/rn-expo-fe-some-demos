@@ -6,13 +6,12 @@ import {
   TouchableOpacity, View
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import FormField from "./FormField";
-import { styles } from "./styles";
-import { validationSchemaByYup } from "./validation";
+import FormField from "./components/register-form/FormField";
+import { styles } from "./components/register-form/styles";
+import { validationSchemaByYup } from "./components/register-form/validation";
 
 export default function RegisterForm() {
   function onSubmitHandler(arg_values) {
-    // https://reactnative.dev/docs/alert
     Alert.alert(
       "Register Successfully!",
       "Form data: " + JSON.stringify(arg_values)

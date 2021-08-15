@@ -1,5 +1,4 @@
 import { FontAwesome5 } from "@expo/vector-icons";
-import Constants from "expo-constants";
 import React from "react";
 import {
   Keyboard,
@@ -28,20 +27,17 @@ export default function MomoLogin() {
             </View>
 
             <View style={styles.styForm}>
-              {/* https://docs.expo.io/guides/icons */}
-              {/* https://fontawesome.com/icons */}
               <FontAwesome5 name="lock" style={styles.iconLock} />
-
               {/* https://reactnative.dev/docs/textinput */}
               <TextInput
                 style={styles.styInputPassword}
                 keyboardType="numeric"
                 secureTextEntry={true}
-                // autoFocus={true}
+                autoFocus={true}
+                // returnKeyType='google'
                 placeholder="Nhập mật khẩu"
                 placeholderTextColor="#929292"
               />
-
               {/* https://reactnative.dev/docs/touchableopacity */}
               <TouchableOpacity style={styles.styButtonLogin}>
                 <Text style={styles.styButtonLoginText}>ĐĂNG NHẬP</Text>
@@ -73,8 +69,6 @@ const styles = StyleSheet.create({
   styContainer: {
     flex: 1,
     backgroundColor: "#b0006d",
-    // SafeAreaView on Android devices (iOS can NOT use padding with "SafeAreaView")
-    paddingTop: Constants.statusBarHeight,
   },
   styContent: {
     paddingHorizontal: 30,
@@ -100,7 +94,7 @@ const styles = StyleSheet.create({
   },
   iconLock: {
     color: "#929292",
-    position: "absolute", // KO co "absolute" thi se KO can giua vertical
+    position: "absolute",
     fontSize: 16,
     top: 22,
     left: 22,

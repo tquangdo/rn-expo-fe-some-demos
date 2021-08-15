@@ -6,7 +6,7 @@ import {
   View,
   Text,
   Image,
-  TouchableHighlight,
+  TouchableOpacity,
   Platform,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
@@ -38,30 +38,27 @@ export default function TrafficLight() {
         <Text style={styles.styOSText}>Platform: {Platform.OS}</Text>
       </View>
       <View style={styles.buttonGroup}>
-        {/* https://reactnative.dev/docs/touchablehighlight */}
-        <TouchableHighlight
+        <TouchableOpacity
           style={[styles.styButton, { backgroundColor: "#ce0100" }]}
           underlayColor="#9b0100"
           onPress={() => setStaColor("red")}
         >
           <Text style={styles.buttonText}>Red</Text>
-        </TouchableHighlight>
-
-        <TouchableHighlight
+        </TouchableOpacity>
+        <TouchableOpacity
           style={[styles.styButton, { backgroundColor: "yellow" }]}
           underlayColor="#cc6900"
           onPress={() => setStaColor("yellow")}
         >
           <Text style={styles.buttonText}>Yellow</Text>
-        </TouchableHighlight>
-
-        <TouchableHighlight
+        </TouchableOpacity>
+        <TouchableOpacity
           style={[styles.styButton, { backgroundColor: "#54a111" }]}
           underlayColor="#3c730c"
           onPress={() => setStaColor("green")}
         >
           <Text style={styles.buttonText}>Green</Text>
-        </TouchableHighlight>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
