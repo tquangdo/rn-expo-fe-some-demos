@@ -78,7 +78,7 @@ export default class HorizontalFlatList extends Component {
                             backgroundColor: 'transparent',
                             justifyContent: 'center',
                         }}
-                            source={require('./assets/login-page/facebook-banner.jpg')}
+                            source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }}
                         >
                         </Image>
                     </View>

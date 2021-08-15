@@ -1,20 +1,17 @@
 import React, { Component } from 'react';
 import {
-  Dimensions, Image, ScrollView, Text, TextInput
+  Dimensions, Image, ScrollView, Text, TextInput, SafeAreaView
 } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 
-export default class VerticalScrollView extends Component {
+class CompScreen extends Component {
   render() {
-    let screenWidth = Dimensions.get('window').width;
+    let { width, height } = Dimensions.get('window')
     return (
-      <ScrollView
-        maximumZoomScale={3}
-        minimumZoomScale={0.2}
-        keyboardDismissMode='on-drag' // khi scroll vertical thi dismiss keyboard
-      >
+      <>
         <Image
           source={require('./assets/splash.png')}
-          style={{ width: screenWidth, height: screenWidth * 2448 / 3264, marginTop: 20 }}
+          style={{ width: width, height: height / 2, marginTop: 20 }}
         >
         </Image>
         <Text
@@ -32,26 +29,27 @@ export default class VerticalScrollView extends Component {
           style={{ padding: 10, margin: 10, borderWidth: 1 }}
           placeholder='Enter text'>
         </TextInput>
-        <Image
-          source={require('./assets/splash.png')}
-          style={{ width: screenWidth, height: screenWidth / 1.33, marginTop: 20 }}
-        />
-        <Image
-          source={require('./assets/splash.png')}
-          style={{ width: screenWidth, height: screenWidth / 1.33, marginTop: 20 }}
-        />
-        <Image
-          source={require('./assets/splash.png')}
-          style={{ width: screenWidth, height: screenWidth / 1.33, marginTop: 20 }}
-        />
-        <Image
-          source={require('./assets/splash.png')}
-          style={{ width: screenWidth, height: screenWidth / 1.33, marginTop: 20 }}
-        />
-        <Image
-          source={require('./assets/splash.png')}
-          style={{ width: screenWidth, height: screenWidth / 1.33, marginTop: 20 }}
-        />
-      </ScrollView>);
+      </>
+    );
+  }
+}
+
+export default class VerticalScrollView extends Component {
+  render() {
+    return (
+      <>
+        <StatusBar style="dark" />
+        <SafeAreaView>
+          <ScrollView
+            maximumZoomScale={3}
+            minimumZoomScale={0.2}
+            keyboardDismissMode='on-drag' // khi scroll vertical thi dismiss keyboard
+          >
+            <CompScreen />
+            <CompScreen />
+          </ScrollView>
+        </SafeAreaView>
+      </>
+    )
   }
 }
